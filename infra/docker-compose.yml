@@ -8,13 +8,40 @@ services:
       VERSION: "1.21.8"
       MEMORY: "4G"
       ENABLE_RCON: "false"
+      CREATE_CONSOLE_IN_PIPE: "true"
     ports:
       - "25565:25565"
     volumes:
       - ./data:/data
+      - ./plugins:/plugins:ro
+      - ./configs/LuckPerms/config.yml:/data/plugins/LuckPerms/config.yml:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "mc-monitor", "status", "--host", "localhost", "--port", "25565"]
       interval: 30s
       timeout: 5s
       retries: 5
+
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: mc_user
+      POSTGRES_PASSWORD: mc_pass   # ⚠️ change-moi ça en prod
+      POSTGRES_DB: minecraft
+      TZ: "Europe/Paris"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U mc_user -d minecraft" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  postgres-data:
