@@ -1,0 +1,19 @@
+# Laisse vide pour "tous les mondes" OU liste-les explicitement
+worlds: []   # ex: [world, world_nether, world_the_end]
+
+messages:
+  poll_ticks: 40  # 20 ticks = 1s
+
+  # Début du cycle JOUR (Solaires actifs)
+  solar_start:
+    default: "&e☀ Le jour se lève."
+    solaires: "&6☀ Le jour se lève ! Vos forces grandissent sous le soleil."
+    ombres: "&7☀ Le jour se lève. La lumière émousse vos pouvoirs."
+    broadcast: "&8[Serveur] &e☀ Le jour se lève sur &f%world%"
+
+  # Début du cycle OMBRES (nuit élargie)
+  shadow_start:
+    default: "&9🌙 La nuit tombe."
+    solaires: "&7🌙 La nuit tombe. Vos forces faiblissent dans l'ombre."
+    ombres: "&5🌙 La nuit tombe ! Les ténèbres vous renforcent."
+    broadcast: "&8[Serveur] &9🌙 La nuit tombe sur &f%world%"
