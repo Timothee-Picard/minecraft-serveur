@@ -1,0 +1,5 @@
+name: SkyRaces
+main: dev.timothee.skyraces.SkyRacesPlugin
+version: 0.0.1
+api-version: '1.21'
+author: Timothée

@@ -147,11 +147,6 @@ data:
     #
     # You can also use this section to disable SSL connections, by uncommenting the 'useSSL' and
     # 'verifyServerCertificate' options below.
-    properties:
-      useUnicode: true
-      characterEncoding: utf8
-      useSSL: false
-      #verifyServerCertificate: false
 
   # The prefix for all LuckPerms SQL tables.
   #
