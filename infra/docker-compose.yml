@@ -6,6 +6,7 @@ services:
       EULA: "TRUE"
       TYPE: "PAPER"
       VERSION: "1.21.8"
+      PAPER_BUILD: "11"
       MEMORY: "4G"
       ENABLE_RCON: "false"
       CREATE_CONSOLE_IN_PIPE: "true"
@@ -15,6 +16,7 @@ services:
       - ./data:/data
       - ./plugins:/plugins:ro
       - ./configs/LuckPerms/config.yml:/data/plugins/LuckPerms/config.yml:ro
+      - ./configs/Essentials/config.yml:/data/plugins/Essentials/config.yml:ro
     depends_on:
       postgres:
         condition: service_healthy

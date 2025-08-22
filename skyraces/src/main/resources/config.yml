@@ -1,0 +1,24 @@
+# Laisse vide pour "tous les mondes" OU liste-les explicitement
+worlds: []   # ex: [world, world_nether, world_the_end]
+
+# Durée du cycle jour/nuit en secondes
+time:
+  night_start: 13000 # 13000 = 6h du matin
+  night_end: 23000 # 23000 = 18h du soir
+  extra_before_ticks: 1800  # 1.5 min = 1800 ticks
+  extra_after_ticks: 1800  # 1.5 min = 1800 ticks
+
+messages:
+  poll_ticks: 40  # 20 ticks = 1s
+
+  announce_on_start: true
+
+  solar_start:
+    general: "&e☀ Le jour se lève."
+    solaires: "&6Vos forces grandissent sous le soleil."
+    ombres: "&7La lumière émousse vos pouvoirs."
+
+  shadow_start:
+    general: "&9🌙 La nuit tombe."
+    solaires: "&7Vos forces faiblissent dans l'ombre."
+    ombres: "&5Les ténèbres vous renforcent."

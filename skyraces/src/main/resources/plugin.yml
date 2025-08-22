@@ -1,5 +1,28 @@
 name: SkyRaces
-main: dev.timothee.skyraces.SkyRacesPlugin
+main: dev.timothee.skyraces.core.SkyRacesPlugin
 version: 0.0.1
 api-version: '1.21'
 author: Timothée
+
+commands:
+  race:
+    description: Affiche ta race
+    usage: /race [info|help]  ou  /race info <joueur> (admin/console)
+    permission: skyraces.command
+
+permissions:
+  skyraces.command:
+    default: true
+
+  # Races via permissions (à attribuer côté gestionnaire de perms)
+  skyrace.race.ombre:
+    description: Appartenance à la race Ombres
+    default: false
+  skyrace.race.solar:
+    description: Appartenance à la race Solaires
+    default: false
+
+  # Accès à l'aide administrateur
+  skyraces.admin:
+    default: op
+
