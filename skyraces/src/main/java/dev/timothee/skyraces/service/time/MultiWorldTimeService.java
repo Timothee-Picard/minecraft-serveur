@@ -1,5 +1,6 @@
 package dev.timothee.skyraces.service.time;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
@@ -11,12 +12,12 @@ public class MultiWorldTimeService {
     private static final int DAY_TICKS = 24000;
 
     // Config runtime
-    private final int nightStart;      // ex: 13000
-    private final int nightEnd;        // ex: 23000
-    private final int extraBefore;     // padding avant (ticks)
-    private final int extraAfter;      // padding après (ticks)
+    @Getter private final int nightStart;      // ex: 13000
+    @Getter private final int nightEnd;        // ex: 23000
+    @Getter private final int extraBefore;     // padding avant (ticks)
+    @Getter private final int extraAfter;      // padding après (ticks)
 
-    private final List<World> worlds;
+    @Getter private final List<World> worlds;
 
     /**
      * Comportement par défaut : nuit vanilla stricte (13k → 23k), sans padding.
@@ -46,10 +47,6 @@ public class MultiWorldTimeService {
         }
     }
 
-    public List<World> getWorlds() {
-        return worlds;
-    }
-
     /** Fenêtre Ombres (nuit élargie selon padding). */
     public boolean isShadowWindow(World world) {
         long t = world.getTime() % DAY_TICKS;
@@ -72,11 +69,6 @@ public class MultiWorldTimeService {
     public int getEffectiveShadowEnd() {
         return mod(nightEnd + extraAfter, DAY_TICKS);
     }
-
-    public int getNightStart()     { return nightStart; }
-    public int getNightEnd()       { return nightEnd; }
-    public int getExtraBefore()    { return extraBefore; }
-    public int getExtraAfter()     { return extraAfter; }
 
     private static int clampTick(int x) { return mod(x, DAY_TICKS); }
     private static int mod(int x, int m) { int r = x % m; return r < 0 ? r + m : r; }

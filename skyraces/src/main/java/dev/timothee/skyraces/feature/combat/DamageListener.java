@@ -3,6 +3,7 @@ package dev.timothee.skyraces.feature.combat;
 import dev.timothee.skyraces.model.Race;
 import dev.timothee.skyraces.service.race.RaceManager;
 import dev.timothee.skyraces.service.time.MultiWorldTimeService;
+import lombok.RequiredArgsConstructor;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -13,14 +14,11 @@ import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.util.EnumSet;
 
+@RequiredArgsConstructor
 public class DamageListener implements Listener {
     private final RaceManager races;
     private final MultiWorldTimeService time;
-
-    public DamageListener(RaceManager races, MultiWorldTimeService time) {
-        this.races = races;
-        this.time  = time;
-    }
+    private final CombatPolicy policy;
 
     private static final EnumSet<EntityDamageEvent.DamageCause> MOB_CAUSES = EnumSet.of(
             EntityDamageEvent.DamageCause.ENTITY_ATTACK,
@@ -41,22 +39,14 @@ public class DamageListener implements Listener {
 
         if (attacker == null) return;
 
-        double base = e.getDamage();
-        double mult = 1.0;
-
         Race r = races.getRace(attacker);
         if (r == null) return;
 
         boolean shadow = time.isShadowWindow(attacker.getWorld());
-
-        if (r == Race.OMBRES && shadow) {
-            mult = 1.20;
-        } else if (r == Race.SOLAIRES && shadow) {
-            mult = 0.90;
-        }
+        double mult = policy.attackMultiplier(r, shadow);
 
         if (mult != 1.0) {
-            e.setDamage(base * mult);
+            e.setDamage(e.getDamage() * mult);
         }
     }
 
@@ -65,22 +55,14 @@ public class DamageListener implements Listener {
         if (!(e.getEntity() instanceof Player p)) return;
         if (!MOB_CAUSES.contains(e.getCause())) return;
 
-        double base = e.getDamage();
-        double mult = 1.0;
-
         Race r = races.getRace(p);
         if (r == null) return;
 
         boolean solar = time.isSolarWindow(p.getWorld());
-
-        if (solar && r == Race.SOLAIRES) {
-            mult = 0.90;
-        } else if (solar && r == Race.OMBRES) {
-            mult = 1.10;
-        }
+        double mult = policy.defenseMultiplier(r, solar);
 
         if (mult != 1.0) {
-            e.setDamage(base * mult);
+            e.setDamage(e.getDamage() * mult);
         }
     }
 }
